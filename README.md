@@ -2,7 +2,7 @@
 
 > A premium beauty studio booking & AI-powered beauty advisor platform built for **MakuUP Studio** by Noor Khan, Mumbai.
 
-![MakuUP Studio](./images/hero_model.png)
+![MakuUP Studio](./screenshots/screenshot_home.png)
 
 ---
 
