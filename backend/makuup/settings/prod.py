@@ -4,7 +4,7 @@ from decouple import config
 DEBUG = False
 ALLOWED_HOSTS = config(
     'ALLOWED_HOSTS',
-    default='makuup-backend.up.railway.app',
+    default='makuup-backend.onrender.com',
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
 

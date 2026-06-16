@@ -7,7 +7,7 @@
 const GlowAuth = (() => {
     'use strict';
 
-    const API       = 'https://makuup-backend.up.railway.app/api/glow-guide';
+    const API       = 'https://makuup-backend.onrender.com/api/glow-guide';
     const KEYS      = {
         access:  'gg_access_token',
         refresh: 'gg_refresh_token',

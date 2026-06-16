@@ -229,7 +229,7 @@
     ----------------------------------------------- */
 
     // 🔧 LOCAL DEV — change to Railway URL before deploying
-    const API_BASE = 'https://makuup-backend.up.railway.app';
+    const API_BASE = 'https://makuup-backend.onrender.com';
     // const API_BASE = 'http://127.0.0.1:8000';
 
     const bookingForm = document.getElementById('booking-form');
