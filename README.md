@@ -192,9 +192,11 @@ The admin dashboard is at `/dashboard.html`. Contact the studio owner for creden
 
 ## 📸 Screenshots
 
-| Main Website | Admin Dashboard |
-|---|---|
-| ![Hero](./images/hero_model.png) | ![Dashboard](./images/about.png) |
+### 🌐 Main Website
+![Main Website](./screenshots/screenshot_home.png)
+
+### 🛡️ Admin Dashboard
+![Admin Dashboard](./screenshots/screenshot_dashboard.png)
 
 ---
 
