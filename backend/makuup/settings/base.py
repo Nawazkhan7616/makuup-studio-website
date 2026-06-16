@@ -74,6 +74,8 @@ CORS_ALLOWED_ORIGINS = [
     config('FRONTEND_URL', default='http://localhost:5500'),
     'http://127.0.0.1:5500',
     'http://localhost:5500',
+    'https://makuupstudio.web.app',
+    'https://makuupstudio.firebaseapp.com',
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = [

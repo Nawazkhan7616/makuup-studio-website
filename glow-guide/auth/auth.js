@@ -7,7 +7,7 @@
 const GlowAuth = (() => {
     'use strict';
 
-    const API       = 'http://127.0.0.1:8000/api/glow-guide';
+    const API       = 'https://makuup-backend.up.railway.app/api/glow-guide';
     const KEYS      = {
         access:  'gg_access_token',
         refresh: 'gg_refresh_token',

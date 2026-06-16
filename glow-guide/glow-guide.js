@@ -7,7 +7,7 @@
 'use strict';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const API_BASE       = 'http://127.0.0.1:8000';
+const API_BASE       = 'https://makuup-backend.up.railway.app';
 const GG_SESSION_KEY = 'gg_session_id';
 const GG_RESULTS_KEY = 'gg_results';
 const GG_STREAK_KEY  = 'gg_streak';
