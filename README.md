@@ -198,6 +198,10 @@ The admin dashboard is at `/dashboard.html`. Contact the studio owner for creden
 ### 🛡️ Admin Dashboard
 ![Admin Dashboard](./screenshots/screenshot_dashboard.png)
 
+### 🤖 Glow Guide AI
+![Glow Guide AI](./screenshots/screenshot_glowguideai.png)
+
+
 ---
 
 ## 📄 License
