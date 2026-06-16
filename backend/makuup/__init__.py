@@ -1,0 +1,3 @@
+"""
+MakuUP Studio — makuup package
+"""

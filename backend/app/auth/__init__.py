@@ -1,0 +1,3 @@
+"""
+MakuUP Studio — auth package
+"""

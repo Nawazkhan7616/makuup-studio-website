@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Glow Dashboard — Glow Guide | MakuUP Studio</title>
+    <meta name="description" content="Track your skin, hair, and nail health scores. View your personalised beauty reports and glow streak.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/glow-guide/glow-guide.css">
+</head>
+<body class="glow-guide-page" data-page="dashboard">
+    <nav class="gg-nav" id="gg-nav">
+        <div class="gg-nav-inner">
+            <a href="/glow-guide/" class="gg-nav-logo">✨ Glow Guide AI</a>
+            <div class="gg-nav-links" id="gg-nav-links">
+                <a href="/glow-guide/skin-analysis/" class="gg-nav-link">Skin AI</a>
+                <a href="/glow-guide/hair-analysis/" class="gg-nav-link">Hair AI</a>
+                <a href="/glow-guide/nail-care/" class="gg-nav-link">Nail Care</a>
+                <a href="/glow-guide/blog/" class="gg-nav-link">Daily Tips</a>
+                <a href="/glow-guide/dashboard/" class="gg-nav-link">Dashboard</a>
+                <a href="/" class="gg-nav-link gg-nav-back">← MakuUP Studio</a>
+            </div>
+            <button class="gg-nav-hamburger" id="gg-nav-hamburger">☰</button>
+        </div>
+    </nav>
+
+    <div style="padding-top:var(--gg-nav-h);">
+        <div style="background:var(--gg-grad-soft);border-bottom:1px solid var(--gg-border);padding:40px 0 36px;">
+            <div class="gg-container">
+                <p class="gg-eyebrow">Personal</p>
+                <h1 class="gg-section-title">My Glow <em>Dashboard</em></h1>
+                <p style="color:var(--gg-text-muted);font-size:0.9rem;">Your results are saved locally in this browser. Complete an analysis to see your scores here.</p>
+            </div>
+        </div>
+
+        <section class="gg-section">
+            <div class="gg-container">
+
+                <!-- Streak Widget -->
+                <div class="gg-streak-widget gg-animate" style="margin-bottom:40px;">
+                    <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gg-gold);margin-bottom:8px;">🔥 Glow Streak</div>
+                    <div class="gg-streak-num" id="streak-count">0</div>
+                    <div style="color:var(--gg-text-muted);font-size:0.875rem;">days visiting Glow Guide</div>
+                </div>
+
+                <!-- Health Score Cards -->
+                <div class="gg-dashboard-grid gg-animate gg-animate-1" style="margin-bottom:40px;">
+                    <!-- Skin -->
+                    <div class="gg-card gg-dash-card" id="dash-skin">
+                        <div class="gg-dash-card-title">🌸 Skin Health</div>
+                        <div id="dash-skin-data" style="display:none;">
+                            <div class="gg-score-ring-wrap" id="ring-dash-skin" style="margin:0 auto 12px;"></div>
+                            <div id="dash-skin-date" style="font-size:0.75rem;color:var(--gg-text-muted);"></div>
+                        </div>
+                        <div id="dash-skin-empty">
+                            <div style="font-size:2.5rem;margin-bottom:12px;opacity:0.3;">🧬</div>
+                            <p class="gg-dash-empty">No skin analysis yet</p>
+                            <a href="/glow-guide/skin-analysis/" class="gg-btn-primary gg-btn-sm" style="margin-top:16px;display:inline-flex;">Start Analysis</a>
+                        </div>
+                    </div>
+
+                    <!-- Hair -->
+                    <div class="gg-card gg-dash-card" id="dash-hair">
+                        <div class="gg-dash-card-title">💆 Hair Health</div>
+                        <div id="dash-hair-data" style="display:none;">
+                            <div class="gg-score-ring-wrap" id="ring-dash-hair" style="margin:0 auto 12px;"></div>
+                            <div id="dash-hair-date" style="font-size:0.75rem;color:var(--gg-text-muted);"></div>
+                        </div>
+                        <div id="dash-hair-empty">
+                            <div style="font-size:2.5rem;margin-bottom:12px;opacity:0.3;">💇</div>
+                            <p class="gg-dash-empty">No hair analysis yet</p>
+                            <a href="/glow-guide/hair-analysis/" class="gg-btn-primary gg-btn-sm" style="margin-top:16px;display:inline-flex;">Start Analysis</a>
+                        </div>
+                    </div>
+
+                    <!-- Nail -->
+                    <div class="gg-card gg-dash-card" id="dash-nail">
+                        <div class="gg-dash-card-title">💅 Nail Health</div>
+                        <div id="dash-nail-data" style="display:none;">
+                            <div class="gg-score-ring-wrap" id="ring-dash-nail" style="margin:0 auto 12px;"></div>
+                            <div id="dash-nail-date" style="font-size:0.75rem;color:var(--gg-text-muted);"></div>
+                        </div>
+                        <div id="dash-nail-empty">
+                            <div style="font-size:2.5rem;margin-bottom:12px;opacity:0.3;">💁</div>
+                            <p class="gg-dash-empty">No nail analysis yet</p>
+                            <a href="/glow-guide/nail-care/" class="gg-btn-primary gg-btn-sm" style="margin-top:16px;display:inline-flex;">Start Analysis</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div style="margin-bottom:40px;" class="gg-animate gg-animate-2">
+                    <h2 style="font-family:var(--gg-font-serif);font-size:1.6rem;color:#fff;margin-bottom:24px;">Quick <em>Actions</em></h2>
+                    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+                        <a href="/glow-guide/skin-analysis/" class="gg-card" style="padding:24px;text-align:center;text-decoration:none;display:block;">
+                            <div style="font-size:2rem;margin-bottom:10px;">🧬</div>
+                            <div style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:6px;">Skin Analysis</div>
+                            <div style="font-size:0.75rem;color:var(--gg-text-muted);">14-question quiz</div>
+                        </a>
+                        <a href="/glow-guide/hair-analysis/" class="gg-card" style="padding:24px;text-align:center;text-decoration:none;display:block;">
+                            <div style="font-size:2rem;margin-bottom:10px;">💆</div>
+                            <div style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:6px;">Hair Wellness</div>
+                            <div style="font-size:0.75rem;color:var(--gg-text-muted);">9-question quiz</div>
+                        </a>
+                        <a href="/glow-guide/nail-care/" class="gg-card" style="padding:24px;text-align:center;text-decoration:none;display:block;">
+                            <div style="font-size:2rem;margin-bottom:10px;">💅</div>
+                            <div style="font-size:0.875rem;font-weight:600;color:#fff;margin-bottom:6px;">Nail Care</div>
+                            <div style="font-size:0.75rem;color:var(--gg-text-muted);">5-question quiz</div>
+                        </a>
+                        <a href="/glow-guide/chatbot/" class="gg-card" style="padding:24px;text-align:center;text-decoration:none;display:block;background:var(--gg-grad-soft);border-color:var(--gg-border-hover);">
+                            <div style="font-size:2rem;margin-bottom:10px;">💬</div>
+                            <div style="font-size:0.875rem;font-weight:600;color:var(--gg-lavender);margin-bottom:6px;">AI Chat</div>
+                            <div style="font-size:0.75rem;color:var(--gg-text-muted);">Ask anything</div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Book Session CTA -->
+                <div class="gg-cta-banner gg-animate gg-animate-3">
+                    <p class="gg-eyebrow">Ready for the Real Deal?</p>
+                    <h2 class="gg-section-title" style="margin-bottom:12px;">Book a Studio <em>Session</em></h2>
+                    <p style="color:var(--gg-text-muted);margin-bottom:28px;max-width:480px;margin-inline:auto;font-size:0.9rem;">Let our professional makeup artists bring your Glow Guide recommendations to life with a personalised studio experience.</p>
+                    <a href="/#booking" class="gg-btn-primary">💄 Book Now at MakuUP Studio</a>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <button class="gg-chatbot-fab" id="gg-chatbot-fab" aria-label="Open AI Chat">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <div class="gg-chatbot-popup" id="gg-chatbot-popup" aria-hidden="true">
+        <div class="gg-chatbot-header">
+            <div class="gg-chatbot-avatar">✨</div>
+            <div><div class="gg-chatbot-name">Glow Guide AI</div><div class="gg-chatbot-status">Your beauty expert · Online</div></div>
+            <button class="gg-chatbot-close" id="gg-chatbot-close">×</button>
+        </div>
+        <div class="gg-chatbot-messages" id="gg-chatbot-messages">
+            <div class="gg-typing-dots" id="gg-typing" style="display:none;"><span></span><span></span><span></span></div>
+        </div>
+        <div class="gg-quick-replies" id="gg-quick-replies"></div>
+        <div class="gg-chatbot-input-row">
+            <input type="text" id="gg-chat-input" placeholder="Ask me anything..." autocomplete="off">
+            <button id="gg-chat-send"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+        </div>
+    </div>
+    <script src="/glow-guide/glow-guide.js"></script>
+</body>
+</html>

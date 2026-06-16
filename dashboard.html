@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — MakuUP Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ── Reset & Base ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0d0d0d;
+            --surface: #161616;
+            --surface-2: #1f1f1f;
+            --border: #2a2a2a;
+            --text: #f5f0eb;
+            --text-muted: #a0978e;
+            --accent: #e96cba;
+            --accent-2: #a855f7;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --new: #3b82f6;
+            --contacted: #f59e0b;
+            --confirmed: #10b981;
+            --radius: 12px;
+            --font: 'Outfit', sans-serif;
+        }
+        html { font-size: 16px; }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        a { color: inherit; text-decoration: none; }
+        button { cursor: pointer; font-family: var(--font); }
+        input, select, textarea { font-family: var(--font); }
+
+        /* ── Login Screen ── */
+        #login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at 60% 40%, rgba(233,108,186,0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 20% 80%, rgba(168,85,247,0.08) 0%, transparent 50%),
+                        var(--bg);
+        }
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 420px;
+        }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-logo .logo-maku { font-size: 26px; font-weight: 600; color: var(--text); letter-spacing: 1px; }
+        .login-logo .logo-up   { font-size: 26px; font-weight: 700; color: var(--accent); }
+        .login-logo .logo-studio { display: block; font-size: 11px; letter-spacing: 5px; color: var(--text-muted); margin-top: 2px; }
+        .login-card h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+        .login-card p  { color: var(--text-muted); font-size: 14px; margin-bottom: 32px; }
+        .field { margin-bottom: 20px; }
+        .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+        .field input {
+            width: 100%;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: var(--text);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .field input:focus { border-color: var(--accent); }
+        .login-error {
+            background: rgba(239,68,68,0.12);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #fca5a5;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: opacity 0.2s;
+        }
+        .btn-login:hover { opacity: 0.9; }
+        .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* ── Dashboard Layout ── */
+        #dashboard-screen { display: none; flex-direction: column; min-height: 100vh; }
+        .dash-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 64px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .dash-logo { font-size: 18px; font-weight: 600; }
+        .dash-logo .logo-up { color: var(--accent); }
+        .dash-header-right { display: flex; align-items: center; gap: 16px; }
+        .dash-user { font-size: 13px; color: var(--text-muted); }
+        .btn-logout {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        .btn-logout:hover { border-color: var(--danger); color: var(--danger); }
+        .dash-main { flex: 1; padding: 32px; }
+
+        /* ── Stats Bar ── */
+        .dash-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+        .stat-card .s-num { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+        .stat-card .s-lbl { font-size: 13px; color: var(--text-muted); }
+        .stat-card.stat-new      .s-num { color: var(--new); }
+        .stat-card.stat-contacted .s-num { color: var(--contacted); }
+        .stat-card.stat-confirmed .s-num { color: var(--confirmed); }
+        .stat-card.stat-total     .s-num { color: var(--accent); }
+
+        /* ── Filters ── */
+        .dash-filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .dash-filters input,
+        .dash-filters select {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--text);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .dash-filters input:focus,
+        .dash-filters select:focus { border-color: var(--accent); }
+        .dash-filters input { flex: 1; min-width: 200px; }
+        .dash-filters select { min-width: 160px; }
+        .btn-filter {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ── Bookings Table ── */
+        .bookings-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .bookings-card h3 {
+            padding: 20px 24px;
+            font-size: 17px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        thead th {
+            text-align: left;
+            padding: 14px 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            background: var(--surface-2);
+            border-bottom: 1px solid var(--border);
+        }
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: var(--surface-2); }
+        tbody td { padding: 14px 20px; font-size: 14px; vertical-align: middle; }
+        .td-name { font-weight: 500; }
+        .td-contact { color: var(--text-muted); font-size: 13px; }
+        .td-service { color: var(--accent); font-weight: 500; }
+
+        /* Status badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+        }
+        .badge-new       { background: rgba(59,130,246,0.15); color: #93c5fd; }
+        .badge-contacted { background: rgba(245,158,11,0.15); color: #fcd34d; }
+        .badge-confirmed { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+
+        /* Status select inline */
+        .status-select {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: var(--text);
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .status-select:focus { border-color: var(--accent); }
+        .status-select option {
+            background: #1f1f1f;
+            color: #f5f0eb;
+        }
+        .status-select option[value="new"]       { color: #93c5fd; }
+        .status-select option[value="contacted"] { color: #fcd34d; }
+        .status-select option[value="confirmed"] { color: #6ee7b7; }
+
+        /* Quick contact buttons (WhatsApp + Call) */
+        .contact-actions { display: flex; gap: 6px; margin-top: 6px; }
+        .btn-contact {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.15s;
+            text-decoration: none;
+        }
+        .btn-contact:hover { transform: scale(1.15); opacity: 0.9; }
+        .btn-wa   { background: rgba(37,211,102,0.18); color: #25d366; }
+        .btn-call { background: rgba(59,130,246,0.18); color: #60a5fa; }
+        .btn-contact svg { width: 15px; height: 15px; }
+
+        /* Action buttons */
+        .td-actions { display: flex; gap: 8px; }
+        .btn-action {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: none;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.8; }
+        .btn-del  { background: rgba(239,68,68,0.15); color: #fca5a5; }
+        .btn-save { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+
+        /* Empty / loading states */
+        .table-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+        .table-empty svg { margin-bottom: 16px; opacity: 0.3; }
+        .loading-text { color: var(--text-muted); font-size: 14px; padding: 40px 20px; text-align: center; }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+        #toast.show { opacity: 1; transform: translateY(0); }
+        #toast.success { border-color: var(--success); color: var(--success); }
+        #toast.error   { border-color: var(--danger);  color: #fca5a5; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .dash-main { padding: 16px; }
+            .login-card { padding: 32px 24px; margin: 16px; }
+            .dash-header { padding: 0 16px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ════════════════════════════════════
+         LOGIN SCREEN
+    ════════════════════════════════════ -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="login-logo">
+                <span class="logo-maku">Maku</span><span class="logo-up">UP</span>
+                <span class="logo-studio">STUDIO</span>
+            </div>
+            <h2>Welcome back 👑</h2>
+            <p>Sign in to manage your bookings and studio.</p>
+
+            <div class="login-error" id="login-error"></div>
+
+            <form id="login-form">
+                <div class="field">
+                    <label for="l-username">Username</label>
+                    <input type="text" id="l-username" placeholder="noor" autocomplete="username" required />
+                </div>
+                <div class="field">
+                    <label for="l-password">Password</label>
+                    <input type="password" id="l-password" placeholder="••••••••" autocomplete="current-password" required />
+                </div>
+                <button class="btn-login" type="submit" id="login-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════
+         DASHBOARD SCREEN
+    ════════════════════════════════════ -->
+    <div id="dashboard-screen">
+
+        <!-- Header -->
+        <header class="dash-header">
+            <div class="dash-logo">
+                Maku<span class="logo-up">UP</span> <span style="font-size:11px;letter-spacing:4px;color:var(--text-muted);font-weight:400;">STUDIO</span>
+            </div>
+            <div class="dash-header-right">
+                <span class="dash-user" id="dash-username"></span>
+                <button class="btn-logout" id="logout-btn">Sign Out</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dash-main">
+
+            <!-- Stats -->
+            <div class="dash-stats">
+                <div class="stat-card stat-total">
+                    <div class="s-num" id="stat-total">—</div>
+                    <div class="s-lbl">Total Bookings</div>
+                </div>
+                <div class="stat-card stat-new">
+                    <div class="s-num" id="stat-new">—</div>
+                    <div class="s-lbl">New</div>
+                </div>
+                <div class="stat-card stat-contacted">
+                    <div class="s-num" id="stat-contacted">—</div>
+                    <div class="s-lbl">Contacted</div>
+                </div>
+                <div class="stat-card stat-confirmed">
+                    <div class="s-num" id="stat-confirmed">—</div>
+                    <div class="s-lbl">Confirmed</div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="dash-filters">
+                <input type="text"   id="search-input"  placeholder="Search by name, email, or phone…" />
+                <select id="status-filter">
+                    <option value="">All Statuses</option>
+                    <option value="new">New</option>
+                    <option value="contacted">Contacted</option>
+                    <option value="confirmed">Confirmed</option>
+                </select>
+                <input type="date" id="date-filter" />
+                <button class="btn-filter" id="apply-filter-btn">Search</button>
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="bookings-card">
+                <h3>Booking Enquiries</h3>
+                <div class="table-wrap">
+                    <table id="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Submitted At</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookings-tbody">
+                            <tr><td colspan="7" class="loading-text">Loading bookings…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.bookings-card -->
+
+            <!-- ── Pending Reviews ── -->
+            <div class="bookings-card" id="pending-reviews-card" style="margin-top:28px">
+                <h3 style="display:flex;align-items:center;gap:10px">
+                    Pending Reviews
+                    <span id="pending-count-badge" style="font-size:0.75rem;background:rgba(200,85,247,0.2);color:#c855f7;border:1px solid rgba(200,85,247,0.3);padding:2px 10px;border-radius:20px;font-weight:600;">0</span>
+                </h3>
+                <div class="table-wrap">
+                    <table id="reviews-table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Service</th>
+                                <th>Rating</th>
+                                <th>Review</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reviews-tbody">
+                            <tr><td colspan="5" class="loading-text">Loading pending reviews...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.pending-reviews-card -->
+
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
+
+    <script>
+    (function () {
+        'use strict';
+
+        // 🔧 LOCAL DEV — change to Railway URL before deploying
+        // const API_BASE = 'https://makuup-backend.up.railway.app';
+        const API_BASE = 'http://127.0.0.1:8000';
+
+        // ─── State ───
+        let accessToken  = localStorage.getItem('makuup_access')  || '';
+        let refreshToken = localStorage.getItem('makuup_refresh') || '';
+        let username     = localStorage.getItem('makuup_user')    || '';
+
+        // ─── Elements ───
+        const loginScreen  = document.getElementById('login-screen');
+        const dashScreen   = document.getElementById('dashboard-screen');
+        const loginForm    = document.getElementById('login-form');
+        const loginError   = document.getElementById('login-error');
+        const loginBtn     = document.getElementById('login-btn');
+        const logoutBtn    = document.getElementById('logout-btn');
+        const dashUsername = document.getElementById('dash-username');
+        const tbody        = document.getElementById('bookings-tbody');
+        const toastEl      = document.getElementById('toast');
+
+        // Stats
+        const statTotal     = document.getElementById('stat-total');
+        const statNew       = document.getElementById('stat-new');
+        const statContacted = document.getElementById('stat-contacted');
+        const statConfirmed = document.getElementById('stat-confirmed');
+
+        // ─── Toast ───
+        let toastTimer;
+        function showToast(msg, type = 'success') {
+            clearTimeout(toastTimer);
+            toastEl.textContent = (type === 'success' ? '✓ ' : '✗ ') + msg;
+            toastEl.className   = `show ${type}`;
+            toastTimer = setTimeout(() => { toastEl.className = ''; }, 3500);
+        }
+
+        // ─── Auth helpers ───
+        function authHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`,
+            };
+        }
+
+        function saveTokens(access, refresh, user) {
+            accessToken  = access;
+            refreshToken = refresh;
+            username     = user;
+            localStorage.setItem('makuup_access',  access);
+            localStorage.setItem('makuup_refresh', refresh);
+            localStorage.setItem('makuup_user',    user);
+        }
+
+        function clearTokens() {
+            accessToken  = '';
+            refreshToken = '';
+            username     = '';
+            localStorage.removeItem('makuup_access');
+            localStorage.removeItem('makuup_refresh');
+            localStorage.removeItem('makuup_user');
+        }
+
+        // ─── Try to refresh access token ───
+        async function tryRefresh() {
+            if (!refreshToken) return false;
+            try {
+                const res = await fetch(`${API_BASE}/api/auth/refresh/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ refresh: refreshToken }),
+                });
+                if (!res.ok) return false;
+                const data = await res.json();
+                accessToken = data.access;
+                localStorage.setItem('makuup_access', data.access);
+                return true;
+            } catch { return false; }
+        }
+
+        // ─── Show / Hide screens ───
+        function showDashboard() {
+            loginScreen.style.display   = 'none';
+            dashScreen.style.display    = 'flex';
+            dashUsername.textContent    = `👤 ${username}`;
+            loadBookings();
+            loadPendingReviews();
+        }
+
+        function showLogin() {
+            loginScreen.style.display   = 'flex';
+            dashScreen.style.display    = 'none';
+        }
+
+        // ─── Init: auto-login if token exists ───
+        if (accessToken && username) {
+            showDashboard();
+        } else {
+            showLogin();
+        }
+
+        // ─── Login ───
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginError.style.display = 'none';
+            loginBtn.textContent = 'Signing in…';
+            loginBtn.disabled    = true;
+
+            const user = document.getElementById('l-username').value.trim();
+            const pass = document.getElementById('l-password').value;
+
+            try {
+                const res = await fetch(`${API_BASE}/api/auth/login/`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass }),
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    saveTokens(data.access, data.refresh, data.username);
+                    showDashboard();
+                } else {
+                    loginError.textContent    = data.error || 'Invalid credentials.';
+                    loginError.style.display  = 'block';
+                }
+            } catch {
+                loginError.textContent   = 'Cannot connect to API server. Is the backend running?';
+                loginError.style.display = 'block';
+            } finally {
+                loginBtn.textContent = 'Sign In';
+                loginBtn.disabled    = false;
+            }
+        });
+
+        // ─── Logout ───
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await fetch(`${API_BASE}/api/auth/logout/`, {
+                    method: 'POST',
+                    headers: authHeaders(),
+                });
+            } catch (_) {}
+            clearTokens();
+            showLogin();
+        });
+
+        // ─── Filters ───
+        document.getElementById('apply-filter-btn').addEventListener('click', loadBookings);
+        document.getElementById('search-input').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') loadBookings();
+        });
+
+        // ─── Load Bookings ───
+        async function loadBookings() {
+            tbody.innerHTML = '<tr><td colspan="7" class="loading-text">Loading…</td></tr>';
+
+            const search = document.getElementById('search-input').value.trim();
+            const status = document.getElementById('status-filter').value;
+            const date   = document.getElementById('date-filter').value;
+
+            const params = new URLSearchParams();
+            if (search) params.set('search', search);
+            if (status) params.set('status', status);
+            if (date)   params.set('date',   date);
+
+            let res;
+            try {
+                res = await fetch(`${API_BASE}/api/bookings/list/?${params}`, {
+                    headers: authHeaders(),
+                });
+            } catch {
+                tbody.innerHTML = '<tr><td colspan="7" class="table-empty">Connection failed.</td></tr>';
+                return;
+            }
+
+            // Token expired? Try refresh
+            if (res.status === 401 || res.status === 403) {
+                const refreshed = await tryRefresh();
+                if (!refreshed) { clearTokens(); showLogin(); return; }
+                res = await fetch(`${API_BASE}/api/bookings/list/?${params}`, {
+                    headers: authHeaders(),
+                });
+            }
+
+            if (!res.ok) {
+                tbody.innerHTML = '<tr><td colspan="7" class="table-empty">Failed to load bookings.</td></tr>';
+                return;
+            }
+
+            const data = await res.json();
+            renderBookings(data.bookings || []);
+            updateStats(data.bookings || []);
+        }
+
+        // ─── Render Bookings ───
+        function renderBookings(bookings) {
+            if (!bookings.length) {
+                tbody.innerHTML = `
+                  <tr><td colspan="7" class="table-empty">
+                    <div>📭 No bookings found</div>
+                  </td></tr>`;
+                return;
+            }
+
+            function fmtSubmitted(iso) {
+                if (!iso) return '—';
+                const d = new Date(iso);
+                return d.toLocaleString('en-IN', {
+                    day:    '2-digit',
+                    month:  'short',
+                    year:   'numeric',
+                    hour:   '2-digit',
+                    minute: '2-digit',
+                    hour12: true,
+                    timeZone: 'Asia/Kolkata'
+                });
+            }
+
+            tbody.innerHTML = bookings.map(b => `
+              <tr id="row-${b.id}">
+                <td>
+                  <div class="td-name">${escH(b.name)}</div>
+                  <div class="td-contact">${escH(b.email)}</div>
+                  <div class="td-contact">${escH(b.phone)}</div>
+                  ${b.phone ? `
+                  <div class="contact-actions">
+                    <a class="btn-contact btn-wa"
+                       href="https://wa.me/${waNumber(b.phone)}"
+                       target="_blank"
+                       title="WhatsApp ${escH(b.name)}">
+                      <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.1 1.523 5.823L.057 23.571 6 22.104A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.651-.52-5.153-1.422l-.37-.22-3.827.999 1.025-3.726-.241-.383A9.958 9.958 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+                      </svg>
+                    </a>
+                    <a class="btn-contact btn-call"
+                       href="tel:${escH(b.phone)}"
+                       title="Call ${escH(b.name)}">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.8 19.79 19.79 0 01.21 2.18C.2 1.12.96.2 2.07.2H5.1a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.1 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.92v1z"/>
+                      </svg>
+                    </a>
+                  </div>` : ''}
+                </td>
+                <td class="td-service">${labelOf(b.service)}</td>
+                <td>${escH(b.date)}</td>
+                <td style="font-size:12px;color:var(--text-muted);white-space:nowrap;">${fmtSubmitted(b.created_at)}</td>
+                <td>
+                  <select class="status-select" data-id="${b.id}" onchange="updateStatus('${b.id}', this.value)">
+                    <option value="new"       ${b.status==='new'       ? 'selected' : ''}>New</option>
+                    <option value="contacted" ${b.status==='contacted' ? 'selected' : ''}>Contacted</option>
+                    <option value="confirmed" ${b.status==='confirmed' ? 'selected' : ''}>Confirmed</option>
+                  </select>
+                </td>
+                <td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-muted);font-size:13px;"
+                    title="${escH(b.message)}">${escH(b.message) || '—'}</td>
+                <td class="td-actions">
+                  <button class="btn-action btn-del" onclick="deleteBooking('${b.id}', '${escH(b.name)}')">Delete</button>
+                </td>
+              </tr>
+            `).join('');
+        }
+
+        // ─── Update Stats ───
+        function updateStats(bookings) {
+            statTotal.textContent     = bookings.length;
+            statNew.textContent       = bookings.filter(b => b.status === 'new').length;
+            statContacted.textContent = bookings.filter(b => b.status === 'contacted').length;
+            statConfirmed.textContent = bookings.filter(b => b.status === 'confirmed').length;
+        }
+
+        // ─── Update Status ───
+        window.updateStatus = async function (bookingId, newStatus) {
+            try {
+                const res = await fetch(`${API_BASE}/api/bookings/update-status/${bookingId}/`, {
+                    method:  'PATCH',
+                    headers: authHeaders(),
+                    body:    JSON.stringify({ status: newStatus }),
+                });
+                if (res.ok) {
+                    showToast(`Status updated to "${newStatus}"`, 'success');
+                    loadBookings();
+                } else {
+                    showToast('Failed to update status', 'error');
+                }
+            } catch {
+                showToast('Connection error', 'error');
+            }
+        };
+
+        // ─── Delete Booking ───
+        window.deleteBooking = async function (bookingId, name) {
+            if (!confirm(`Delete booking for "${name}"? This cannot be undone.`)) return;
+            try {
+                const res = await fetch(`${API_BASE}/api/bookings/delete/${bookingId}/`, {
+                    method:  'DELETE',
+                    headers: authHeaders(),
+                });
+                if (res.ok) {
+                    showToast(`Booking for ${name} deleted.`, 'success');
+                    loadBookings();
+                } else {
+                    showToast('Failed to delete booking.', 'error');
+                }
+            } catch {
+                showToast('Connection error.', 'error');
+            }
+        };
+
+        // ─── PENDING REVIEWS ─────────────────────────────────────
+        async function loadPendingReviews() {
+            const tbody = document.getElementById('reviews-tbody');
+            const badge = document.getElementById('pending-count-badge');
+            if (!tbody) return;
+            try {
+                const res   = await fetch(`${API_BASE}/api/testimonials/pending/`, { headers: authHeaders() });
+                const data  = await res.json();
+                const items = data.testimonials || [];
+                if (badge) badge.textContent = items.length;
+                if (!items.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="loading-text" style="color:#6ee7b7">&#10003; No pending reviews &#8212; all clear!</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = items.map(t => {
+                    const stars = '&#9733;'.repeat(t.rating) + '&#9734;'.repeat(5 - t.rating);
+                    const loc   = [labelOf(t.service), t.location].filter(Boolean).join(' &middot; ');
+                    return `<tr>
+                        <td><strong>${escH(t.name)}</strong><br><small style="color:#8b7fa3">${loc}</small></td>
+                        <td>${escH(labelOf(t.service)) || '&mdash;'}</td>
+                        <td style="color:#d4a853;font-size:1rem;letter-spacing:2px">${stars}</td>
+                        <td style="max-width:280px;white-space:normal;font-size:0.85rem;color:#c8bdd6;font-style:italic">&ldquo;${escH(t.quote)}&rdquo;</td>
+                        <td>
+                            <button onclick="approveReview('${t.id}','${escH(t.name)}')"
+                                style="background:rgba(16,185,129,0.15);color:#6ee7b7;border:1px solid rgba(16,185,129,0.25);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;margin-right:6px;">
+                                &#10003; Approve
+                            </button>
+                            <button onclick="deleteReview('${t.id}','${escH(t.name)}')"
+                                style="background:rgba(239,68,68,0.12);color:#fca5a5;border:1px solid rgba(239,68,68,0.25);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;">
+                                &#10005; Reject
+                            </button>
+                        </td>
+                    </tr>`;
+                }).join('');
+            } catch {
+                if (tbody) tbody.innerHTML = '<tr><td colspan="5" class="loading-text">Could not load pending reviews.</td></tr>';
+            }
+        }
+
+        window.approveReview = async function (testiId, name) {
+            try {
+                const res = await fetch(`${API_BASE}/api/testimonials/approve/${testiId}/`, {
+                    method: 'PATCH', headers: authHeaders(),
+                });
+                if (res.ok) { showToast(`Review by "${name}" approved!`, 'success'); loadPendingReviews(); }
+                else         { showToast('Failed to approve review.', 'error'); }
+            } catch { showToast('Connection error.', 'error'); }
+        };
+
+        window.deleteReview = async function (testiId, name) {
+            if (!confirm(`Reject and delete review by "${name}"? This cannot be undone.`)) return;
+            try {
+                const res = await fetch(`${API_BASE}/api/testimonials/delete/${testiId}/`, {
+                    method: 'DELETE', headers: authHeaders(),
+                });
+                if (res.ok) { showToast(`Review by "${name}" rejected.`, 'success'); loadPendingReviews(); }
+                else         { showToast('Failed to reject review.', 'error'); }
+            } catch { showToast('Connection error.', 'error'); }
+        };
+
+        // ─── Helpers ───
+        const SERVICE_LABELS = {
+            bridal: 'Bridal Makeup', editorial: 'Editorial & Fashion',
+            sangeet: 'Sangeet & Event', engagement: 'Engagement Ceremony',
+            mehendi: 'Mehendi Ceremony', everyday: 'Everyday Glam',
+            lessons: 'Makeup Lessons', skincare: 'Skincare Prep',
+        };
+        function labelOf(slug) { return SERVICE_LABELS[slug] || slug || '—'; }
+        function escH(str) {
+            const d = document.createElement('div');
+            d.textContent = str || '';
+            return d.innerHTML;
+        }
+        // Format phone for WhatsApp wa.me link
+        // Strips non-digits; adds 91 for Indian 10-digit numbers
+        function waNumber(phone) {
+            let digits = (phone || '').replace(/\D/g, '');
+            if (digits.length === 10 && /^[6-9]/.test(digits)) {
+                digits = '91' + digits;
+            }
+            return digits;
+        }
+    })();
+    </script>
+</body>
+</html>

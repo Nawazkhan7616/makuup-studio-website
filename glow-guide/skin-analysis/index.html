@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skin Analysis — Glow Guide AI | MakuUP Studio</title>
+    <meta name="description" content="Get your personalised skin type analysis, health score, and complete AM/PM routine powered by AI.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/glow-guide/glow-guide.css">
+</head>
+<body class="glow-guide-page" data-page="skin-analysis">
+
+    <nav class="gg-nav" id="gg-nav">
+        <div class="gg-nav-inner">
+            <a href="/glow-guide/" class="gg-nav-logo">✨ Glow Guide AI</a>
+            <div class="gg-nav-links" id="gg-nav-links">
+                <a href="/glow-guide/skin-analysis/" class="gg-nav-link">Skin AI</a>
+                <a href="/glow-guide/hair-analysis/" class="gg-nav-link">Hair AI</a>
+                <a href="/glow-guide/nail-care/" class="gg-nav-link">Nail Care</a>
+                <a href="/glow-guide/blog/" class="gg-nav-link">Daily Tips</a>
+                <a href="/glow-guide/dashboard/" class="gg-nav-link">Dashboard</a>
+                <a href="/" class="gg-nav-link gg-nav-back">← MakuUP Studio</a>
+            </div>
+            <button class="gg-nav-hamburger" id="gg-nav-hamburger">☰</button>
+        </div>
+    </nav>
+
+    <div style="padding-top:var(--gg-nav-h);">
+        <!-- Page Header -->
+        <div style="background:var(--gg-grad-soft);border-bottom:1px solid var(--gg-border);padding:48px 0 40px;">
+            <div class="gg-container" style="text-align:center;">
+                <p class="gg-eyebrow">AI-Powered</p>
+                <h1 class="gg-section-title">Skin <em>Analysis</em></h1>
+                <p class="gg-section-sub" style="margin-inline:auto;">Answer 14 questions about your skin, lifestyle, and habits. Get your personalised skin type, health scores, and a complete routine.</p>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <section class="gg-section" id="quiz-section">
+            <div class="gg-container">
+                <div class="gg-quiz-wrap" id="skin-quiz">
+                    <div class="gg-quiz-counter" id="quiz-counter">1 / 14</div>
+                    <div class="gg-quiz-progress-bar">
+                        <div class="gg-quiz-progress-fill" id="quiz-progress"></div>
+                    </div>
+                    <div class="gg-quiz-steps" id="quiz-steps"></div>
+                    <div class="gg-quiz-nav">
+                        <button class="gg-btn-ghost gg-btn-sm gg-quiz-prev">← Back</button>
+                        <button class="gg-btn-primary gg-btn-sm gg-quiz-next">Next →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <section id="loading-section" class="gg-loading" style="display:none;min-height:40vh;">
+            <div class="gg-spinner"></div>
+            <div class="gg-loading-text">Analysing your skin profile with AI...</div>
+        </section>
+
+        <!-- Result Section -->
+        <section class="gg-section gg-result-section" id="result-section">
+            <div class="gg-container">
+                <!-- Hero Result -->
+                <div class="gg-result-hero" style="margin-bottom:40px;">
+                    <span class="gg-skin-type-badge" id="skin-type-badge">✨ Skin Type</span>
+                    <h2 class="gg-section-title" style="margin-bottom:8px;">Your Skin <em>Report</em></h2>
+                    <p style="color:var(--gg-text-muted);font-size:0.9rem;">Based on your answers, here's your personalised skin health report.</p>
+                    <!-- Score Rings -->
+                    <div class="gg-score-grid" style="margin-top:36px;">
+                        <div style="text-align:center;">
+                            <div class="gg-score-ring-wrap" id="ring-health" style="margin:0 auto 8px;"></div>
+                            <div style="font-size:0.78rem;color:var(--gg-text-muted);">Overall Health</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div class="gg-score-ring-wrap" id="ring-hydration" style="margin:0 auto 8px;"></div>
+                            <div style="font-size:0.78rem;color:var(--gg-text-muted);">Hydration</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div class="gg-score-ring-wrap" id="ring-sensitivity" style="margin:0 auto 8px;"></div>
+                            <div style="font-size:0.78rem;color:var(--gg-text-muted);">Sensitivity</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div id="ring-acne" style="height:130px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;"></div>
+                            <div style="font-size:0.78rem;color:var(--gg-text-muted);">Acne Risk</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Routines -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px;">
+                    <div class="gg-card gg-card-pad">
+                        <h3 style="font-family:var(--gg-font-serif);font-size:1.3rem;color:#fff;margin-bottom:20px;">☀️ Morning Routine</h3>
+                        <ul class="gg-routine-list" id="morning-routine"></ul>
+                    </div>
+                    <div class="gg-card gg-card-pad">
+                        <h3 style="font-family:var(--gg-font-serif);font-size:1.3rem;color:#fff;margin-bottom:20px;">🌙 Night Routine</h3>
+                        <ul class="gg-routine-list" id="night-routine"></ul>
+                    </div>
+                </div>
+
+                <!-- Ingredients -->
+                <div style="margin-bottom:40px;">
+                    <h3 style="font-family:var(--gg-font-serif);font-size:1.6rem;color:#fff;margin-bottom:24px;">🧪 Your Power <em>Ingredients</em></h3>
+                    <div class="gg-ingredients-grid" id="ingredients-list"></div>
+                </div>
+
+                <!-- Actions -->
+                <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;padding:32px;background:var(--gg-grad-soft);border:1px solid var(--gg-border);border-radius:var(--gg-radius-lg);">
+                    <button onclick="window.location.reload()" class="gg-btn-ghost">🔄 Retake Quiz</button>
+                    <a href="/glow-guide/dashboard/" class="gg-btn-ghost">📊 View Dashboard</a>
+                    <a href="/glow-guide/chatbot/" class="gg-btn-primary">💬 Ask AI More Questions</a>
+                    <a href="/#booking" class="gg-btn-ghost">💄 Book a Session</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Floating Chatbot -->
+    <button class="gg-chatbot-fab" id="gg-chatbot-fab" aria-label="Open AI Chat">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <div class="gg-chatbot-popup" id="gg-chatbot-popup" aria-hidden="true">
+        <div class="gg-chatbot-header">
+            <div class="gg-chatbot-avatar">✨</div>
+            <div><div class="gg-chatbot-name">Glow Guide AI</div><div class="gg-chatbot-status">Ask about your skin type</div></div>
+            <button class="gg-chatbot-close" id="gg-chatbot-close">×</button>
+        </div>
+        <div class="gg-chatbot-messages" id="gg-chatbot-messages">
+            <div class="gg-typing-dots" id="gg-typing" style="display:none;"><span></span><span></span><span></span></div>
+        </div>
+        <div class="gg-quick-replies" id="gg-quick-replies"></div>
+        <div class="gg-chatbot-input-row">
+            <input type="text" id="gg-chat-input" placeholder="Ask about skincare..." autocomplete="off">
+            <button id="gg-chat-send"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+        </div>
+    </div>
+
+    <script src="/glow-guide/glow-guide.js"></script>
+    <script>
+        // Wire quiz steps counter to progress bar elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressFill = document.getElementById('quiz-progress');
+            const counter = document.getElementById('quiz-counter');
+            // Override selectors used in initQuiz
+            document.getElementById('skin-quiz').querySelector('.gg-quiz-progress-fill');
+        });
+    </script>
+</body>
+</html>

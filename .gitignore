@@ -1,0 +1,42 @@
+# ── Python ──
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+dist/
+build/
+.eggs/
+venv/
+env/
+.venv/
+.env/
+
+# ── Environment ──
+.env
+*.env
+backend/.env
+
+# ── Django ──
+staticfiles/
+media/
+db.sqlite3
+
+# ── IDE ──
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Logs ──
+*.log
+
+# ── Node (if any) ──
+node_modules/
+.firebase/
+
+# ── SSL / debug scripts ──
+backend/ssl_test.py

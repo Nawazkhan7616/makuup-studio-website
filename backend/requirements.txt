@@ -1,0 +1,41 @@
+# Django core
+Django==4.2.16
+djangorestframework==3.15.2
+
+# MongoDB
+mongoengine==0.28.2
+pymongo==4.7.3
+dnspython==2.6.1
+
+# CORS
+django-cors-headers==4.4.0
+
+# Authentication (JWT)
+PyJWT==2.9.0
+
+# Environment variables
+python-decouple==3.8
+
+# Email
+# (uses Django's built-in email system with Gmail SMTP)
+
+# WhatsApp (Twilio)
+twilio==9.3.3
+
+# Payments
+razorpay==1.4.1
+
+# Image uploads (Cloudinary)
+cloudinary==1.41.0
+
+# Deployment
+gunicorn==22.0.0
+whitenoise==6.7.0
+
+# Utilities
+Pillow>=11.0.0
+google-generativeai>=0.8.0   # legacy SDK (fallback)
+google-genai>=1.0.0           # new SDK (preferred)
+passlib>=1.7.4             # password hashing for Glow Guide users
+bcrypt>=4.0.0              # bcrypt backend for passlib
+

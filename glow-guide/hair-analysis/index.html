@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Wellness AI — Glow Guide | MakuUP Studio</title>
+    <meta name="description" content="AI-powered hair and scalp analysis. Get your personalised weekly haircare routine and growth recommendations.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/glow-guide/glow-guide.css">
+</head>
+<body class="glow-guide-page" data-page="hair-analysis">
+    <nav class="gg-nav" id="gg-nav">
+        <div class="gg-nav-inner">
+            <a href="/glow-guide/" class="gg-nav-logo">✨ Glow Guide AI</a>
+            <div class="gg-nav-links" id="gg-nav-links">
+                <a href="/glow-guide/skin-analysis/" class="gg-nav-link">Skin AI</a>
+                <a href="/glow-guide/hair-analysis/" class="gg-nav-link">Hair AI</a>
+                <a href="/glow-guide/nail-care/" class="gg-nav-link">Nail Care</a>
+                <a href="/glow-guide/blog/" class="gg-nav-link">Daily Tips</a>
+                <a href="/glow-guide/dashboard/" class="gg-nav-link">Dashboard</a>
+                <a href="/" class="gg-nav-link gg-nav-back">← MakuUP Studio</a>
+            </div>
+            <button class="gg-nav-hamburger" id="gg-nav-hamburger">☰</button>
+        </div>
+    </nav>
+
+    <div style="padding-top:var(--gg-nav-h);">
+        <div style="background:var(--gg-grad-soft);border-bottom:1px solid var(--gg-border);padding:48px 0 40px;">
+            <div class="gg-container" style="text-align:center;">
+                <p class="gg-eyebrow">AI-Powered</p>
+                <h1 class="gg-section-title">Hair Wellness <em>Analysis</em></h1>
+                <p class="gg-section-sub" style="margin-inline:auto;">9 questions about your hair type, scalp, and habits. Get your hair health score, weekly care routine, and growth tips.</p>
+            </div>
+        </div>
+
+        <section class="gg-section" id="quiz-section">
+            <div class="gg-container">
+                <div class="gg-quiz-wrap" id="hair-quiz">
+                    <div class="gg-quiz-counter" id="quiz-counter">1 / 9</div>
+                    <div class="gg-quiz-progress-bar"><div class="gg-quiz-progress-fill" id="quiz-progress"></div></div>
+                    <div class="gg-quiz-steps" id="quiz-steps"></div>
+                    <div class="gg-quiz-nav">
+                        <button class="gg-btn-ghost gg-btn-sm gg-quiz-prev">← Back</button>
+                        <button class="gg-btn-primary gg-btn-sm gg-quiz-next">Next →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="loading-section" class="gg-loading" style="display:none;min-height:40vh;">
+            <div class="gg-spinner"></div>
+            <div class="gg-loading-text">Analysing your hair profile with AI...</div>
+        </section>
+
+        <section class="gg-section gg-result-section">
+            <div class="gg-container">
+                <div class="gg-result-hero" style="margin-bottom:40px;">
+                    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;">
+                        <span class="gg-skin-type-badge" id="scalp-badge">💆 Scalp Type</span>
+                        <span class="gg-skin-type-badge" id="hair-type-badge" style="background:var(--gg-rose-soft);border-color:rgba(240,165,192,0.3);color:var(--gg-rose);">✨ Hair Type</span>
+                    </div>
+                    <h2 class="gg-section-title">Your Hair <em>Report</em></h2>
+                    <p style="color:var(--gg-text-muted);font-size:0.9rem;margin-bottom:36px;">Your personalised hair health score and weekly care plan.</p>
+                    <div style="display:flex;justify-content:center;">
+                        <div style="text-align:center;">
+                            <div class="gg-score-ring-wrap" id="ring-hair-health" style="margin:0 auto 12px;"></div>
+                            <div style="font-size:0.85rem;color:var(--gg-text-muted);">Hair Health Score</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px;">
+                    <div class="gg-card gg-card-pad">
+                        <h3 style="font-family:var(--gg-font-serif);font-size:1.3rem;color:#fff;margin-bottom:20px;">🌱 Growth Recommendations</h3>
+                        <ul id="growth-recs" style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0;"></ul>
+                    </div>
+                    <div class="gg-card gg-card-pad">
+                        <h3 style="font-family:var(--gg-font-serif);font-size:1.3rem;color:#fff;margin-bottom:20px;">🧴 Power Ingredients</h3>
+                        <div id="hair-ingredients" style="display:flex;flex-direction:column;gap:16px;"></div>
+                    </div>
+                </div>
+
+                <div class="gg-card gg-card-pad" style="margin-bottom:40px;">
+                    <h3 style="font-family:var(--gg-font-serif);font-size:1.3rem;color:#fff;margin-bottom:24px;">📅 Your Weekly Hair Routine</h3>
+                    <div id="weekly-routine"></div>
+                </div>
+
+                <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;padding:32px;background:var(--gg-grad-soft);border:1px solid var(--gg-border);border-radius:var(--gg-radius-lg);">
+                    <button onclick="window.location.reload()" class="gg-btn-ghost">🔄 Retake Quiz</button>
+                    <a href="/glow-guide/dashboard/" class="gg-btn-ghost">📊 View Dashboard</a>
+                    <a href="/glow-guide/chatbot/" class="gg-btn-primary">💬 Ask AI About Hair</a>
+                    <a href="/#booking" class="gg-btn-ghost">💄 Book a Session</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <button class="gg-chatbot-fab" id="gg-chatbot-fab" aria-label="Open AI Chat">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <div class="gg-chatbot-popup" id="gg-chatbot-popup" aria-hidden="true">
+        <div class="gg-chatbot-header">
+            <div class="gg-chatbot-avatar">✨</div>
+            <div><div class="gg-chatbot-name">Glow Guide AI</div><div class="gg-chatbot-status">Ask about haircare</div></div>
+            <button class="gg-chatbot-close" id="gg-chatbot-close">×</button>
+        </div>
+        <div class="gg-chatbot-messages" id="gg-chatbot-messages">
+            <div class="gg-typing-dots" id="gg-typing" style="display:none;"><span></span><span></span><span></span></div>
+        </div>
+        <div class="gg-quick-replies" id="gg-quick-replies"></div>
+        <div class="gg-chatbot-input-row">
+            <input type="text" id="gg-chat-input" placeholder="Ask about hair..." autocomplete="off">
+            <button id="gg-chat-send"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+        </div>
+    </div>
+    <script src="/glow-guide/glow-guide.js"></script>
+</body>
+</html>

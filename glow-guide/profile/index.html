@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — Glow Guide AI | MakuUP Studio</title>
+    <meta name="description" content="View your personalised beauty reports, quiz history and AI chat history on Glow Guide AI.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/glow-guide/glow-guide.css">
+</head>
+<body class="glow-guide-page" data-page="profile">
+
+    <!-- Navigation -->
+    <nav class="gg-nav" id="gg-nav">
+        <div class="gg-nav-inner">
+            <a href="/glow-guide/" class="gg-nav-logo">✨ Glow Guide AI</a>
+            <div class="gg-nav-links" id="gg-nav-links">
+                <a href="/glow-guide/skin-analysis/" class="gg-nav-link">Skin AI</a>
+                <a href="/glow-guide/hair-analysis/" class="gg-nav-link">Hair AI</a>
+                <a href="/glow-guide/nail-care/" class="gg-nav-link">Nail Care</a>
+                <a href="/glow-guide/chatbot/" class="gg-nav-link">AI Chat</a>
+                <a href="/glow-guide/blog/" class="gg-nav-link">Daily Tips</a>
+                <div id="gg-auth-nav-slot"></div>
+                <a href="/" class="gg-nav-link gg-nav-back">← MakuUP Studio</a>
+            </div>
+            <button class="gg-nav-hamburger" id="gg-nav-hamburger">☰</button>
+        </div>
+    </nav>
+
+    <main style="padding-top: var(--gg-nav-h);">
+        <div class="gg-container" style="padding-top: 48px; padding-bottom: 80px;">
+
+            <!-- Loading State -->
+            <div id="profile-loading" class="gg-loading">
+                <div class="gg-spinner"></div>
+                <p class="gg-loading-text">Loading your profile…</p>
+            </div>
+
+            <!-- Not Logged In -->
+            <div id="profile-login-prompt" style="display:none; text-align:center; padding: 80px 20px;">
+                <div style="font-size:3rem; margin-bottom:20px;">🔐</div>
+                <h2 style="font-family:var(--gg-font-serif); font-size:2rem; color:#fff; margin-bottom:12px;">Sign in to see your profile</h2>
+                <p style="color:var(--gg-text-muted); margin-bottom:28px;">Your beauty reports and AI chat history are saved securely to your account.</p>
+                <button class="gg-btn-primary gg-auth-trigger" data-tab="login">Sign In to Glow Guide</button>
+                <span style="color:var(--gg-text-faint); margin: 0 12px;">or</span>
+                <button class="gg-btn-ghost gg-auth-trigger" data-tab="register">Create Account</button>
+            </div>
+
+            <!-- Profile Content -->
+            <div id="profile-content" style="display:none;">
+
+                <!-- Hero -->
+                <div class="gg-profile-hero gg-animate">
+                    <div class="gg-profile-avatar-lg" id="profile-avatar">N</div>
+                    <div class="gg-profile-info">
+                        <h1 id="profile-name">Loading…</h1>
+                        <p class="gg-profile-email" id="profile-email"></p>
+                        <div class="gg-profile-meta">
+                            <div class="gg-profile-meta-item"><span>🌸</span><span id="profile-member-since">Member since —</span></div>
+                            <div class="gg-profile-meta-item"><span>🤖</span><span>Powered by Google Gemini</span></div>
+                        </div>
+                    </div>
+                    <div style="margin-left:auto; flex-shrink:0;">
+                        <button class="gg-btn-ghost" id="profile-logout-btn" style="font-size:0.82rem; padding: 8px 16px;">Sign Out</button>
+                    </div>
+                </div>
+
+                <!-- Reports Grid -->
+                <h2 class="gg-section-title gg-animate" style="margin-bottom:24px;">📊 Your Beauty Reports</h2>
+                <div class="gg-report-history gg-animate">
+
+                    <!-- Skin -->
+                    <div class="gg-report-card" id="skin-report-card">
+                        <div class="gg-report-card-icon">🌸</div>
+                        <div class="gg-report-card-title">Skin Analysis</div>
+                        <div id="skin-report-content">
+                            <p class="gg-report-card-empty">No skin quiz taken yet.</p>
+                            <a href="/glow-guide/skin-analysis/" class="gg-btn-primary" style="margin-top:16px; display:inline-block; font-size:0.82rem; padding:8px 18px;">Take Skin Quiz →</a>
+                        </div>
+                    </div>
+
+                    <!-- Hair -->
+                    <div class="gg-report-card" id="hair-report-card">
+                        <div class="gg-report-card-icon">💆</div>
+                        <div class="gg-report-card-title">Hair Analysis</div>
+                        <div id="hair-report-content">
+                            <p class="gg-report-card-empty">No hair quiz taken yet.</p>
+                            <a href="/glow-guide/hair-analysis/" class="gg-btn-primary" style="margin-top:16px; display:inline-block; font-size:0.82rem; padding:8px 18px;">Take Hair Quiz →</a>
+                        </div>
+                    </div>
+
+                    <!-- Nail -->
+                    <div class="gg-report-card" id="nail-report-card">
+                        <div class="gg-report-card-icon">💅</div>
+                        <div class="gg-report-card-title">Nail Care</div>
+                        <div id="nail-report-content">
+                            <p class="gg-report-card-empty">No nail quiz taken yet.</p>
+                            <a href="/glow-guide/nail-care/" class="gg-btn-primary" style="margin-top:16px; display:inline-block; font-size:0.82rem; padding:8px 18px;">Take Nail Quiz →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat History -->
+                <div class="gg-card gg-animate" style="margin-bottom:40px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                        <h3 style="font-family:var(--gg-font-serif); font-size:1.3rem; color:#fff; font-weight:400;">💬 AI Chat History</h3>
+                        <a href="/glow-guide/chatbot/" class="gg-btn-ghost" style="font-size:0.82rem; padding:7px 16px;">Open Chat →</a>
+                    </div>
+                    <div class="gg-chat-history-list" id="chat-history-list">
+                        <p style="color:var(--gg-text-faint); font-size:0.875rem; font-style:italic;">No chat history yet. <a href="/glow-guide/chatbot/" style="color:var(--gg-lavender);">Start a conversation →</a></p>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="gg-animate">
+                    <h3 class="gg-section-title" style="margin-bottom:20px;">🚀 Quick Actions</h3>
+                    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <a href="/glow-guide/skin-analysis/" class="gg-btn-primary">🌸 Retake Skin Quiz</a>
+                        <a href="/glow-guide/hair-analysis/" class="gg-btn-secondary">💆 Retake Hair Quiz</a>
+                        <a href="/glow-guide/chatbot/" class="gg-btn-ghost">🤖 Chat with AI</a>
+                        <a href="/glow-guide/" class="gg-btn-ghost">← Back to Glow Guide</a>
+                    </div>
+                </div>
+
+            </div><!-- /profile-content -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="gg-footer">
+        <div class="gg-container">
+            <div class="gg-footer-logo">✨ Glow Guide AI</div>
+            <p class="gg-footer-copy">Part of MakuUP Studio · Beauty powered by Google Gemini</p>
+        </div>
+    </footer>
+
+    <script src="/glow-guide/glow-guide.js"></script>
+    <script src="/glow-guide/auth/auth.js"></script>
+    <script>
+    (async function() {
+        'use strict';
+
+        const loading       = document.getElementById('profile-loading');
+        const loginPrompt   = document.getElementById('profile-login-prompt');
+        const profileContent = document.getElementById('profile-content');
+
+        // Check auth
+        if (!GlowAuth.isLoggedIn()) {
+            loading.style.display = 'none';
+            loginPrompt.style.display = 'block';
+            // Re-bind auth triggers
+            document.querySelectorAll('.gg-auth-trigger').forEach(btn => {
+                btn.addEventListener('click', () => GlowAuth.openModal(btn.dataset.tab || 'login'));
+            });
+            return;
+        }
+
+        // Fetch profile
+        const profile = await GlowAuth.getProfile();
+        loading.style.display = 'none';
+
+        if (!profile) {
+            // Token invalid — clear and show login
+            GlowAuth.logout();
+            return;
+        }
+
+        // Show content
+        profileContent.style.display = 'block';
+        document.getElementById('profile-logout-btn').addEventListener('click', () => GlowAuth.logout());
+
+        // Fill hero
+        const user = profile.user;
+        const initial = (user.name || 'U').charAt(0).toUpperCase();
+        document.getElementById('profile-avatar').textContent = initial;
+        document.getElementById('profile-name').textContent   = user.name;
+        document.getElementById('profile-email').textContent  = user.email;
+        document.getElementById('profile-member-since').textContent =
+            'Member since ' + new Date(user.member_since).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+
+        // Skin report
+        if (profile.skin_reports && profile.skin_reports.length > 0) {
+            const s = profile.skin_reports[0];
+            document.getElementById('skin-report-content').innerHTML = `
+                <div class="gg-report-card-score">${s.health_score}</div>
+                <div class="gg-report-card-label">Health Score · ${s.skin_type ? s.skin_type.charAt(0).toUpperCase() + s.skin_type.slice(1) + ' Skin' : ''}</div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+                    ${s.acne_risk ? `<span class="gg-tag" style="font-size:0.72rem; padding:3px 10px;">Acne: ${s.acne_risk}</span>` : ''}
+                    ${s.hydration_score ? `<span class="gg-tag" style="font-size:0.72rem; padding:3px 10px;">Hydration: ${s.hydration_score}%</span>` : ''}
+                </div>
+                <div class="gg-report-card-meta">
+                    <span>📅 ${new Date(s.created_at).toLocaleDateString('en-IN')}</span>
+                    <a href="/glow-guide/skin-analysis/" style="color:var(--gg-lavender); font-size:0.72rem;">Retake →</a>
+                </div>`;
+        }
+
+        // Hair report
+        if (profile.hair_reports && profile.hair_reports.length > 0) {
+            const h = profile.hair_reports[0];
+            document.getElementById('hair-report-content').innerHTML = `
+                <div class="gg-report-card-score">${h.hair_health_score}</div>
+                <div class="gg-report-card-label">Hair Health · ${h.hair_type ? h.hair_type.charAt(0).toUpperCase() + h.hair_type.slice(1) : ''}</div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+                    ${h.scalp_health ? `<span class="gg-tag" style="font-size:0.72rem; padding:3px 10px;">Scalp: ${h.scalp_health}</span>` : ''}
+                </div>
+                <div class="gg-report-card-meta">
+                    <span>📅 ${new Date(h.created_at).toLocaleDateString('en-IN')}</span>
+                    <a href="/glow-guide/hair-analysis/" style="color:var(--gg-lavender); font-size:0.72rem;">Retake →</a>
+                </div>`;
+        }
+
+        // Nail report
+        if (profile.nail_reports && profile.nail_reports.length > 0) {
+            const n = profile.nail_reports[0];
+            document.getElementById('nail-report-content').innerHTML = `
+                <div class="gg-report-card-score">${n.nail_health_score}</div>
+                <div class="gg-report-card-label">Nail Health Score</div>
+                <div style="margin-bottom:14px;">
+                    ${(n.color_recommendations || []).slice(0, 2).map(c =>
+                        `<span class="gg-tag" style="font-size:0.72rem; padding:3px 10px; margin-right:4px;">${c}</span>`
+                    ).join('')}
+                </div>
+                <div class="gg-report-card-meta">
+                    <span>📅 ${new Date(n.created_at).toLocaleDateString('en-IN')}</span>
+                    <a href="/glow-guide/nail-care/" style="color:var(--gg-lavender); font-size:0.72rem;">Retake →</a>
+                </div>`;
+        }
+
+        // Chat history
+        const chatList = document.getElementById('chat-history-list');
+        if (profile.chat_history && profile.chat_history.length > 0) {
+            chatList.innerHTML = profile.chat_history.slice(-30).map(msg => `
+                <div class="gg-history-msg ${msg.role === 'user' ? 'user-msg' : 'ai-msg'}">
+                    <span class="gg-history-role">${msg.role === 'user' ? '👤' : '✨'}</span>
+                    <div class="gg-history-bubble">${msg.message.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+                </div>`).join('');
+            chatList.scrollTop = chatList.scrollHeight;
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.gg-animate').forEach(el => observer.observe(el));
+
+    })();
+    </script>
+</body>
+</html>
