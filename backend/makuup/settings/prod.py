@@ -17,5 +17,12 @@ CSRF_COOKIE_SECURE = True
 # Static files — use full manifest storage in production (collectstatic must have been run)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# CSRF — Django 4.0+ requires explicit trusted origins for cross-origin POST requests
+CSRF_TRUSTED_ORIGINS = [
+    'https://makuup-backend.onrender.com',
+    'https://makuupstudio.web.app',
+    'https://makuupstudio.firebaseapp.com',
+]
+
 # Real Gmail SMTP in production (set in base.py from env)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
